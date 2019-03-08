@@ -1,20 +1,34 @@
-
+import { FETCH_REQUEST, FETCH_SUCCESS, FETCH_FAILURE } from "../actions";
 
 const initialState = {
-    deletingFriend: false,
-    fetchingFriends: false,
+    isLoading: false,
     friends: [],
-    loggingIn: false,
-    savingFriends: false,
-    updatingFriend: false,
     error: null
 };
 
 export const friendsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ACTION_TYPE':
-            return 
+        case FETCH_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                error: "",
+            };
+        case FETCH_SUCCESS:
+            return {
+                ...state,
+                friends: action.payload,
+                isLoading: false,
+                error: "",
+            };
+        case FETCH_FAILURE:
+            return {
+                ...state,
+                error: action.payload,
+                isLoading: false,
+            };
+
         default:
-            return state
+            return state;
     }
 }
